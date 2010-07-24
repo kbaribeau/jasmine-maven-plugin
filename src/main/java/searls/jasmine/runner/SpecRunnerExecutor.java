@@ -21,7 +21,7 @@ public class SpecRunnerExecutor {
 	
 	public JasmineResult execute(String runnerFile) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3);
-		quietIncorrectnessListener(webClient);
+		applyQuietIncorrectnessListener(webClient);
 		
 	    HtmlPage page = webClient.getPage("file://"+runnerFile);
 	    waitForRunnerToFinish(page);
@@ -73,13 +73,12 @@ public class SpecRunnerExecutor {
 		return (Boolean) result .getJavaScriptResult();
 	}
 
-	private void quietIncorrectnessListener(WebClient webClient) {
+	private void applyQuietIncorrectnessListener(WebClient webClient) {
 		//Disables stuff like this "com.gargoylesoftware.htmlunit.IncorrectnessListenerImpl notify WARNING: Obsolete content type encountered: 'text/javascript'."
 		webClient.setIncorrectnessListener(new IncorrectnessListener() {
 			public void notify(String arg0, Object arg1) {}
 		});
 	}
-
 
 
 }
